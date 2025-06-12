@@ -1,0 +1,12 @@
+# Eclipse
+.settings/
+.project
+.classpath
+
+# Binarios y temporales
+bin/
+build/
+target/
+*.class
+*.log
+*.tmp
