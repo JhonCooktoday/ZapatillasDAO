@@ -132,8 +132,37 @@
   <div class="text-center mt-4">
     <a href="bienvenido.jsp" class="btn btn-outline-light">Regresar</a>
   </div>
+  <button class="btn btn-success" onclick="mostrarPDF()">
+  <i class="fas fa-file-pdf"></i> Generar PDF
+</button>
+
+
+
+<div id="previewPDF" class="mt-4" style="display: none;">
+  <h5 class="text-center">Vista previa del PDF</h5>
+  <iframe src="" width="100%" height="500px" style="border: 2px solid #28a745; border-radius: 8px;"></iframe>
 </div>
+
+  
+</div>
+
+
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
+
+<script>
+  function mostrarPDF() {
+    const preview = document.getElementById("previewPDF");
+    const iframe = preview.querySelector("iframe");
+
+    iframe.src = "Report"; // La URL del servlet PDF
+    preview.style.display = "block";
+
+    // Scroll automático hasta la vista previa
+    preview.scrollIntoView({ behavior: "smooth" });
+  }
+</script>
+

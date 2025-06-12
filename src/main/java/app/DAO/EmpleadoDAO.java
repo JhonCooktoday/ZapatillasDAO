@@ -175,6 +175,30 @@ public class EmpleadoDAO implements app.Interfaces.IEmpleado{
 	        en.printStackTrace();
 	    }
 	}
+	
+	public List<Empleado> listarpdf() {
+	    List<Empleado> lista = new ArrayList<>();
+	    try {
+	        Connection con = Conexion.getConexion();
+	        PreparedStatement ps = con.prepareStatement("SELECT * FROM empleados");
+	        ResultSet rs = ps.executeQuery();
+	        while (rs.next()) {
+	            Empleado e = new Empleado();
+	            e.setId(rs.getInt("id"));
+	            e.setNombre(rs.getString("nombre"));
+	            e.setApellido(rs.getString("apellido"));
+	            e.setCorreo(rs.getString("correo"));
+	            e.setTelefono(rs.getString("telefono"));
+	            e.setSalario(rs.getDouble("salario"));
+	            lista.add(e);
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return lista;
+	}
+
+	
 
 	
 	
