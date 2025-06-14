@@ -41,13 +41,15 @@
 </head>
 <body>
 
-<div class="container mt-5">
-    <div class="card shadow-lg rounded">
+<div class="container mt-5" >
+    <div class="card shadow-lg rounded" style="min-width: 1000px;">
         <div class="card-header text-white text-center bg-danger">
             <h4 class="mb-0">Registrar Nueva Zapatilla</h4>
         </div>
-        <div class="card-body">
-            <form action="RegistrarZapatilla" method="post" id="formZapatilla">
+<div class="card-body">
+    <form action="RegistrarZapatilla" method="post" id="formZapatilla" enctype="multipart/form-data" >
+        <div class="row">
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="modelo" class="form-label">Modelo</label>
                     <input type="text" class="form-control" id="modelo" name="modelo" required>
@@ -82,7 +84,9 @@
                         <option value="Unisex">Unisex</option>
                     </select>
                 </div>
+            </div>
 
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="tipo" class="form-label">Tipo</label>
                     <input type="text" class="form-control" id="tipo" name="tipo" required>
@@ -102,7 +106,7 @@
                             if (marcas != null) {
                                 for (Marca m : marcas) {
                         %>
-                                    <option value="<%= m.getIdMarca() %>"><%= m.getNombreMarca() %></option>
+                            <option value="<%= m.getIdMarca() %>"><%= m.getNombreMarca() %></option>
                         <%
                                 }
                             }
@@ -110,12 +114,20 @@
                     </select>
                 </div>
 
-                <div class="d-flex justify-content-between mt-4">
-                    <a href="IndexZapatilla" class="btn btn-secondary">Cancelar</a>
-                    <button type="submit" class="btn btn-success">Registrar</button>
+                <div class="mb-3">
+                    <label for="imagen" class="form-label">Imagen</label>
+                    <input type="file" class="form-control" id="imagen" name="imagen" accept="image/*" required>
                 </div>
-            </form>
+            </div>
         </div>
+
+        <div class="d-flex justify-content-between mt-4">
+            <a href="IndexZapatilla" class="btn btn-secondary">Cancelar</a>
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </div>
+    </form>
+</div>
+
     </div>
 </div>
 

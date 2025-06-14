@@ -1,11 +1,16 @@
 package app.Controlador;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
+
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import app.DAO.MarcaDAO;
 import app.DAO.ZapatillaDAO;
@@ -15,6 +20,7 @@ import app.Modelo.Zapatilla;
 /**
  * Servlet implementation class ControladorActualizarZapatilla
  */
+@MultipartConfig
 @WebServlet("/ActualizarZapatilla")
 public class ControladorActualizarZapatilla extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -44,6 +50,35 @@ public class ControladorActualizarZapatilla extends HttpServlet {
 	        z.setTipo(request.getParameter("tipo"));
 	        z.setFechaIngreso(java.sql.Date.valueOf(request.getParameter("fechaIngreso")));
 	        z.setMarca(new Marca(Integer.parseInt(request.getParameter("marca")), ""));
+	        
+	        String imagenAnterior = request.getParameter("imagen_anterior");
+	        
+	        //
+	        String imagenF;
+	        Part filePart = request.getPart("imagen");
+	        
+	        if(filePart != null && filePart.getSize() > 0) {
+	            // Guardar nueva imagen
+	        	String fileName = System.currentTimeMillis() + "_" + Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+	            String uploadPath = getServletContext().getRealPath("/imagenes/zapatillas");
+	            File dir = new File(uploadPath);
+	            if (!dir.exists()) dir.mkdirs();
+
+	            String fullPath = uploadPath + File.separator + fileName;
+	            filePart.write(fullPath);
+	            imagenF = "imagenes/zapatillas/" + fileName;
+
+	            // Eliminar imagen anterior si existe
+	            if (imagenAnterior != null && !imagenAnterior.isEmpty()) {
+	                File oldFile = new File(getServletContext().getRealPath("/") + imagenAnterior);
+	                if (oldFile.exists()) oldFile.delete();
+	            }
+	        }
+	        else {
+	        	imagenF = imagenAnterior;
+	        }
+	        
+	        z.setImg_Zapatilla(imagenF);
 
 	        boolean actualizado = new ZapatillaDAO().actualizar(z);
 

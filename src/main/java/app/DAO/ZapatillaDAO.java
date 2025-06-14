@@ -18,7 +18,7 @@ public class ZapatillaDAO implements IZapatilla {
 	@Override
 	public void registrar(Zapatilla Zapatilla) {
 		Conexion conex = new Conexion();
-        String sql = "INSERT INTO Zapatilla (modelo, color, talla, precio, stock, genero, tipo, fechaIngreso, Marca_ID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Zapatilla (modelo, color, talla, precio, stock, genero, tipo, fechaIngreso, Marca_ID, Img_Zapatilla) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = null;
         try {
             ps = conex.getConexion().prepareStatement(sql);
@@ -31,6 +31,7 @@ public class ZapatillaDAO implements IZapatilla {
             ps.setString(7, Zapatilla.getTipo());
             ps.setDate(8, new java.sql.Date(Zapatilla.getFechaIngreso().getTime()));
             ps.setInt(9, Zapatilla.getMarca().getIdMarca());
+            ps.setString(10, Zapatilla.getImg_Zapatilla());
             
             int x = ps.executeUpdate();
             if (x > 0) {
@@ -62,6 +63,7 @@ public class ZapatillaDAO implements IZapatilla {
 				zapatillaBuscado.setGenero(rs.getString("genero"));
 				zapatillaBuscado.setTipo(rs.getString("tipo"));
 				zapatillaBuscado.setFechaIngreso(rs.getDate("fechaIngreso"));
+				zapatillaBuscado.setImg_Zapatilla(rs.getString("Img_Zapatilla"));
 				Marca marca = new Marca(rs.getInt("idMarca"), rs.getString("nombreMarca"));
 				zapatillaBuscado.setMarca(marca);
 			}
@@ -74,7 +76,7 @@ public class ZapatillaDAO implements IZapatilla {
 	}
 	@Override
 	public boolean actualizar(Zapatilla Zapatilla) {
-		String sql = "UPDATE Zapatilla SET modelo = ?, color = ?, talla = ?, precio = ?, stock = ?, genero = ?, tipo = ?, fechaIngreso = ?, Marca_ID = ? WHERE idZapatilla = ?";
+		String sql = "UPDATE Zapatilla SET modelo = ?, color = ?, talla = ?, precio = ?, stock = ?, genero = ?, tipo = ?, fechaIngreso = ?, Marca_ID = ?, Img_Zapatilla = ?  WHERE idZapatilla = ?";
 	    try (Connection conn = Conexion.getConexion();
 	         PreparedStatement ps = conn.prepareStatement(sql)) {
 
@@ -87,7 +89,8 @@ public class ZapatillaDAO implements IZapatilla {
 	        ps.setString(7, Zapatilla.getTipo());
 	        ps.setDate(8, new java.sql.Date(Zapatilla.getFechaIngreso().getTime()));
 	        ps.setInt(9, Zapatilla.getMarca().getIdMarca());
-	        ps.setInt(10, Zapatilla.getIdZapatilla());
+	        ps.setString(10, Zapatilla.getImg_Zapatilla());
+	        ps.setInt(11, Zapatilla.getIdZapatilla());
 
 	        return ps.executeUpdate() > 0;
 
@@ -138,6 +141,7 @@ public class ZapatillaDAO implements IZapatilla {
 				zap.setGenero(rs.getString("genero"));
 				zap.setTipo(rs.getString("tipo"));
 				zap.setFechaIngreso(rs.getDate("fechaIngreso"));
+				zap.setImg_Zapatilla(rs.getString("Img_Zapatilla"));
 				Marca marca = new Marca(marca_ID, rs.getString("nombreMarca"));
 			    zap.setMarca(marca);
 				//asignamos lo recuperado de la bd

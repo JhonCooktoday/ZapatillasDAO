@@ -61,26 +61,31 @@
 </header>
 	<main class="container py-5 flex-fill">
 		<h1 class="text-center mb-5 text-warning">Zapatillas en Stock</h1>
-		<div class="row g-4">
-			<c:forEach var="z" items="${zapatillas}">
-				<div class="col-sm-6 col-md-4">
-					<a href="DetalleZapatilla?id=${z.idZapatilla}"
-						class="text-decoration-none">
-						<div class="card bg-dark text-white h-100">
-							<div class="card-body">
-								<h5 class="card-title text-warning">${z.modelo}</h5>
-								<ul class="list-unstyled">
-									<li><strong>Color:</strong> ${z.color}</li>
-									<li><strong>Talla:</strong> ${z.talla}</li>
-									<li><strong>Precio:</strong> S/.${z.precio}</li>
-									<li><strong>Stock:</strong> ${z.stock}</li>
-								</ul>
-							</div>
-						</div>
-					</a>
-				</div>
-			</c:forEach>
-		</div>
+<div class="row g-4">
+  <c:forEach var="z" items="${zapatillas}">
+    <div class="col-sm-6 col-md-4">
+      <a href="DetalleZapatilla?id=${z.idZapatilla}" class="text-decoration-none">
+        <div class="card bg-dark text-white h-100 d-flex flex-row">
+          <!-- Imagen al costado izquierdo -->
+          <div class="w-50">
+            <img src="${z.img_Zapatilla}" class="img-fluid h-100 rounded-start" style="object-fit: cover; max-width: 200px; max-height:200px;">
+          </div>
+          <!-- Contenido de la tarjeta -->
+          <div class="card-body w-50">
+            <h5 class="card-title text-warning">${z.modelo}</h5>
+            <ul class="list-unstyled">
+              <li><strong>Color:</strong> ${z.color}</li>
+              <li><strong>Talla:</strong> ${z.talla}</li>
+              <li><strong>Precio:</strong> S/.${z.precio}</li>
+              <li><strong>Stock:</strong> ${z.stock}</li>
+            </ul>
+          </div>
+        </div>
+      </a>
+    </div>
+  </c:forEach>
+</div>
+
 	</main>
 <footer class="bg-danger text-center text-white py-3 mt-auto">
     <p class="mb-0">&copy; 2025 by Jhon and Nicolas</p>
