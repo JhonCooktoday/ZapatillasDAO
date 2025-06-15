@@ -6,10 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+import java.io.File;
 
 import app.DAO.MarcaDAO;
 import app.DAO.ZapatillaDAO;
@@ -19,6 +23,7 @@ import app.Modelo.Zapatilla;
 /**
  * Servlet implementation class ControlerRegZapatilla
  */
+@MultipartConfig
 @WebServlet("/RegistrarZapatilla")
 public class ControlerRegZapatilla extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +50,33 @@ public class ControlerRegZapatilla extends HttpServlet {
 				String tipo = request.getParameter("tipo");
 				String fechaIngresoStr = request.getParameter("fechaIngreso");
 				int marcaId = Integer.parseInt(request.getParameter("marca"));
-
+				
+				//Obtener la imagen
+				Part filePart = request.getPart("imagen");
+				String fileName = new File(filePart.getSubmittedFileName()).getName();
+				
+			    // Generar un nombre único para el archivo (opcional)
+			    String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
+			    
+			    // Establecer la ruta de guardado de la imagen
+			    String savePath = getServletContext().getRealPath("/imagenes/zapatillas");
+			    File uploadDir = new File(savePath);
+			    if (!uploadDir.exists()) uploadDir.mkdirs();
+			    
+			    // Guardar el archivo
+			    try {
+			        filePart.write(savePath + File.separator + uniqueFileName);
+			    } catch (IOException e) {
+			        e.printStackTrace();
+			        request.setAttribute("estado", false);
+			        request.setAttribute("errorMessage", e.getMessage());
+			        request.getRequestDispatcher("error.jsp").forward(request, response);
+			        return; // Detener la ejecución si hay un error con la imagen
+			    }
+			    
+			    // Crear la ruta relativa para la imagen
+			    String imagenF = "imagenes/zapatillas/" + uniqueFileName;
+				
 				try {
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 					java.util.Date utilDate = sdf.parse(fechaIngresoStr);
@@ -65,6 +96,8 @@ public class ControlerRegZapatilla extends HttpServlet {
 					Marca marca = new Marca();
 					marca.setIdMarca(marcaId);
 					zapatilla.setMarca(marca);
+					
+					zapatilla.setImg_Zapatilla(imagenF);
 
 					// Registrar en BD
 					ZapatillaDAO dao = new ZapatillaDAO();

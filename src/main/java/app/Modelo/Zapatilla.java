@@ -12,6 +12,7 @@ public class Zapatilla {
     private String genero;
     private String tipo;
     private Date fechaIngreso;
+    private String img_Zapatilla;
     private Marca marca;
     
     
@@ -25,12 +26,13 @@ public class Zapatilla {
 	genero = "";
 	tipo = "";
 	fechaIngreso = new Date();
+	img_Zapatilla = "";
 	marca = new Marca();
 	}
 
 
 	public Zapatilla(String modelo, String color, double talla, double precio, int stock,
-			String genero, String tipo, Date fechaIngreso, Marca marca) {
+			String genero, String tipo, Date fechaIngreso, String img_Zapatilla, Marca marca) {
 		idZapatilla = 0;
 		this.modelo = modelo;
 		this.color = color;
@@ -40,11 +42,12 @@ public class Zapatilla {
 		this.genero = genero;
 		this.tipo = tipo;
 		this.fechaIngreso = fechaIngreso;
+		this.img_Zapatilla = img_Zapatilla;
 		this.marca = marca;
 	}
 
 	public Zapatilla(int idZapatilla, String modelo, String color, double talla, double precio, int stock,
-			String genero, String tipo, Date fechaIngreso, Marca marca) {
+			String genero, String tipo, Date fechaIngreso, String img_Zapatilla, Marca marca) {
 		this.idZapatilla = idZapatilla;
 		this.modelo = modelo;
 		this.color = color;
@@ -54,6 +57,7 @@ public class Zapatilla {
 		this.genero = genero;
 		this.tipo = tipo;
 		this.fechaIngreso = fechaIngreso;
+		this.img_Zapatilla = img_Zapatilla;
 		this.marca = marca;
 	}
 
@@ -150,6 +154,16 @@ public class Zapatilla {
 	}
 
 
+	public String getImg_Zapatilla() {
+		return img_Zapatilla;
+	}
+
+
+	public void setImg_Zapatilla(String img_Zapatilla) {
+		this.img_Zapatilla = img_Zapatilla;
+	}
+
+
 	public Marca getMarca() {
 		return marca;
 	}
@@ -164,7 +178,7 @@ public class Zapatilla {
 	public String toString() {
 		return "Zapatilla [idZapatilla=" + idZapatilla + ", modelo=" + modelo + ", color=" + color + ", talla=" + talla
 				+ ", precio=" + precio + ", stock=" + stock + ", genero=" + genero + ", tipo=" + tipo
-				+ ", fechaIngreso=" + fechaIngreso + ", marca=" + marca + "]";
+				+ ", fechaIngreso=" + fechaIngreso + ", img_Zapatilla=" + img_Zapatilla +", marca=" + marca + "]";
 	}
     
 }

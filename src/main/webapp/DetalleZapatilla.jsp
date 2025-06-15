@@ -44,9 +44,12 @@
     </style>
 </head>
 <body>
-    <div class="detalle-container">
-        <h2>Detalle de la Zapatilla</h2>
-        
+<div class="detalle-container d-flex" style="gap: 2rem; min-width: 800px;">
+
+    <!-- Columna de Detalles -->
+    <div style="flex: 1; min-width: 300px;">
+        <h2>Detalles</h2>
+
         <div class="detalle-item"><span class="campo">ID:</span> ${ atrZapatilla.getIdZapatilla() }</div>
         <div class="detalle-item"><span class="campo">Modelo:</span> ${ atrZapatilla.getModelo() }</div>
         <div class="detalle-item"><span class="campo">Color:</span> ${ atrZapatilla.getColor() }</div>
@@ -62,5 +65,16 @@
             <a href="IndexZapatilla" class="btn btn-regresar text-white px-4">← Regresar</a>
         </div>
     </div>
+
+    <!-- Imagen dentro del mismo contenedor -->
+    <div style="flex: 1; width: 400px; display: flex; align-items: center; justify-content: center;">
+        <img src="${ atrZapatilla.getImg_Zapatilla() }" alt="Imagen de la zapatilla"
+             class="img-fluid rounded shadow-sm" style="width: 300px; object-fit: contain;">
+    </div>
+
+</div>
+
+
+	
 </body>
 </html>
